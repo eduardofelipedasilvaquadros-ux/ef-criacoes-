@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EF Criações | Criação de Sites e Apps em Ponta Grossa - PR</title>
 <meta name="description" content="Criação de sites, landing pages, lojas virtuais e aplicativos em Ponta Grossa - PR. Veja quanto custa um site e peça seu orçamento pelo WhatsApp.">
@@ -202,11 +204,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#inicio" aria-label="EF Criações, início"><svg aria-hidden="true"><use href="#ef-mark"/></svg><b>EF CRIAÇÕES</b></a>
+    <a class="brand" href="#inicio"><svg aria-hidden="true"><use href="#ef-mark"/></svg><b>EF CRIAÇÕES</b></a>
     <nav class="menu" aria-label="Seções">
       <a href="#servicos">Serviços</a><a href="#precos">Preços</a><a href="#processo">Como funciona</a><a href="#portfolio">Portfólio</a><a href="#faq">Dúvidas</a>
     </nav>
-    <a class="btn btn-gold wa-link" href="https://wa.me/5542991339702?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg><span>Orçamento</span></a>
+    <a class="btn btn-gold wa-link" href="https://wa.me/5542991339702?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento." target="_blank" rel="noopener" aria-label="Pedir orçamento no WhatsApp"><svg aria-hidden="true"><use href="#wa"/></svg><span>Orçamento</span></a>
   </div>
 </header>
 
@@ -390,15 +392,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       </div>
       <form class="orc" id="orc">
         <div class="two">
-          <label for="f-nome">Seu nome<input id="f-nome" name="nome" autocomplete="name" placeholder="Ex.: Mariana"></label>
-          <label for="f-empresa">Empresa<input id="f-empresa" name="empresa" autocomplete="organization" placeholder="Ex.: Clínica Sorriso"></label>
+          <label for="f-nome">Seu nome<input id="f-nome" name="nome" maxlength="60" autocomplete="name" placeholder="Ex.: Mariana"></label>
+          <label for="f-empresa">Empresa<input id="f-empresa" name="empresa" maxlength="80" autocomplete="organization" placeholder="Ex.: Clínica Sorriso"></label>
         </div>
         <label for="f-tipo">O que você precisa
           <select id="f-tipo" name="tipo">
             <option>Site institucional</option><option>Landing page</option><option>Site para clínica</option><option>Loja virtual</option><option>Aplicativo</option><option>Manutenção de site</option><option>Ainda não sei</option>
           </select>
         </label>
-        <label for="f-msg">Conte um pouco sobre o projeto<textarea id="f-msg" name="msg" rows="3" placeholder="Ex.: quero aparecer no Google e receber agendamentos pelo WhatsApp."></textarea></label>
+        <label for="f-msg">Conte um pouco sobre o projeto<textarea id="f-msg" name="msg" maxlength="600" rows="3" placeholder="Ex.: quero aparecer no Google e receber agendamentos pelo WhatsApp."></textarea></label>
         <a class="btn btn-gold wa-link" id="f-send" href="https://wa.me/5542991339702" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Enviar pelo WhatsApp</a>
         <small>Seus dados vão só para a conversa no WhatsApp. Nada fica salvo neste site.</small>
       </form>
@@ -462,29 +464,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
   ]
 }
 </script>
-<script>
-/* Troque pelo seu número com DDI e DDD, só números. Ex.: 5542999998888 */
-const WHATSAPP = "5542991339702";
-(function(){
-  const base = "https://wa.me/" + WHATSAPP;
-  const padrao = "Olá, vim pelo site e quero um orçamento.";
-  document.querySelectorAll(".wa-link").forEach(a => { if (a.id !== "f-send") a.href = base + "?text=" + encodeURIComponent(padrao); });
-  const ids = ["f-nome","f-empresa","f-tipo","f-msg"];
-  const send = document.getElementById("f-send");
-  function build(){
-    const v = id => document.getElementById(id).value.trim();
-    let t = "Olá! Vim pelo site da EF Criações.";
-    if (v("f-nome")) t += "\nNome: " + v("f-nome");
-    if (v("f-empresa")) t += "\nEmpresa: " + v("f-empresa");
-    t += "\nPreciso de: " + v("f-tipo");
-    if (v("f-msg")) t += "\nSobre o projeto: " + v("f-msg");
-    send.href = base + "?text=" + encodeURIComponent(t);
-  }
-  ids.forEach(id => document.getElementById(id).addEventListener("input", build));
-  document.getElementById("orc").addEventListener("submit", e => e.preventDefault());
-  build();
-})();
-</script>
+<script src="main.js" defer></script>
 
 </body>
 </html>
