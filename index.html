@@ -104,7 +104,9 @@ section{padding-block:clamp(64px,9vw,112px);border-top:1px solid var(--line)}
 .svc .tag{font-family:var(--f-mono);font-size:.74rem;color:var(--gold);letter-spacing:.06em;margin-top:auto;padding-top:8px}
 
 /* pricing */
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.price-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.price-grid>.price{grid-column:span 2}
+.price-grid>.price:nth-child(n+4){grid-column:span 3}
 .price{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .price.feat{border-color:var(--gold)}
 .price .kind{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -187,6 +189,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
   nav.menu{display:none}
   .hero-grid,.sec-head,.contact-grid,.faq,.factors{grid-template-columns:1fr}
   .svc,.price-grid,.pf{grid-template-columns:1fr 1fr}
+  .price-grid>.price,.price-grid>.price:nth-child(n+4){grid-column:auto}
   .steps{grid-template-columns:1fr 1fr;gap:40px 0}
 }
 @media (max-width:620px){
@@ -238,7 +241,6 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
         <div class="qrow"><span>Site + hospedagem</span><b><small>sem entrada</small>R$ 89/mês</b></div>
         <div class="qrow"><span>Site de 1 página</span><b><small>a partir de</small>R$ 397</b></div>
         <div class="qrow"><span>Site institucional</span><b><small>a partir de</small>R$ 797</b></div>
-        <div class="qrow"><span>Site para clínica</span><b><small>a partir de</small>R$ 897</b></div>
         <div class="qrow"><span>Loja virtual</span><b><small>a partir de</small>R$ 1.497</b></div>
         <div class="qrow"><span>Aplicativo</span><b><small>a partir de</small>R$ 3.997</b></div>
         <a class="btn btn-ghost" href="#precos">O que está incluído</a>
@@ -329,13 +331,6 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
           <ul><li>Início, sobre, serviços, contato e blog</li><li>SEO local para Ponta Grossa</li><li>Cadastro no Google Meu Negócio</li></ul>
         </div>
         <div class="price">
-          <div class="kind"><h3>Site para clínicas</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 897</p>
-          <p class="parc">ou 5x de R$ 189 no cartão</p>
-          <p class="meta">até 7 páginas · até 5 dias</p>
-          <ul><li>Especialidades, equipe e convênios</li><li>Agendamento pelo WhatsApp</li><li>Textos dentro das regras do CFM e CFO</li></ul>
-        </div>
-        <div class="price">
           <div class="kind"><h3>Loja virtual</h3></div>
           <p class="amount"><small>a partir de</small>R$ 1.497</p>
           <p class="parc">ou 10x de R$ 159 no cartão</p>
@@ -423,7 +418,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
         </div>
         <label for="f-tipo">O que você precisa
           <select id="f-tipo" name="tipo">
-            <option>Site institucional</option><option>Landing page</option><option>Site para clínica</option><option>Loja virtual</option><option>Aplicativo</option><option>Manutenção de site</option><option>Ainda não sei</option>
+            <option>Site institucional</option><option>Site de 1 página</option><option>Loja virtual</option><option>Aplicativo</option><option>Manutenção de site</option><option>Ainda não sei</option>
           </select>
         </label>
         <label for="f-msg">Conte um pouco sobre o projeto<textarea id="f-msg" name="msg" maxlength="600" rows="3" placeholder="Ex.: quero aparecer no Google e receber agendamentos pelo WhatsApp."></textarea></label>
@@ -484,7 +479,6 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
   "makesOffer":[
     {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site de 1 página"},"priceSpecification":{"@type":"PriceSpecification","minPrice":397,"priceCurrency":"BRL"}},
     {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site institucional"},"priceSpecification":{"@type":"PriceSpecification","minPrice":797,"priceCurrency":"BRL"}},
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site para clínicas"},"priceSpecification":{"@type":"PriceSpecification","minPrice":897,"priceCurrency":"BRL"}},
     {"@type":"Offer","itemOffered":{"@type":"Service","name":"Loja virtual"},"priceSpecification":{"@type":"PriceSpecification","minPrice":1497,"priceCurrency":"BRL"}},
     {"@type":"Offer","itemOffered":{"@type":"Service","name":"Aplicativo"},"priceSpecification":{"@type":"PriceSpecification","minPrice":3997,"priceCurrency":"BRL"}}
   ]
