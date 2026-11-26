@@ -176,6 +176,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 .wa-fab:hover{transform:translateY(-2px)}
 .wa-fab svg{width:24px;height:24px}
 
+.price .parc{margin-top:-6px;font-size:.88rem;color:var(--cream)}
+.plano{display:grid;grid-template-columns:1.4fr 1fr;gap:20px 40px;align-items:center;margin-bottom:18px;padding:30px;border-radius:18px;border:1px solid var(--gold);background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--gold) 18%,transparent),transparent 60%),var(--panel)}
+.plano-txt{display:grid;gap:10px;justify-items:start;min-width:0}
+.plano-txt h3{font-size:1.6rem}
+.plano-txt p{color:var(--muted)}
+.plano-preco{display:grid;gap:12px;justify-items:start;min-width:0}
+@media (max-width:620px){.plano{grid-template-columns:1fr;padding:22px}}
 @media (max-width:960px){
   nav.menu{display:none}
   .hero-grid,.sec-head,.contact-grid,.faq,.factors{grid-template-columns:1fr}
@@ -227,12 +234,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       </div>
       <aside class="quote-card" aria-label="Resumo de preços">
         <p class="q">Quanto custa um site?</p>
-        <p class="sub">Valores de partida em Ponta Grossa, sem mensalidade escondida.</p>
-        <div class="qrow"><span>Landing page</span><b><small>a partir de</small>R$ 1.200</b></div>
-        <div class="qrow"><span>Site institucional</span><b><small>a partir de</small>R$ 2.000</b></div>
-        <div class="qrow"><span>Site para clínica</span><b><small>a partir de</small>R$ 2.500</b></div>
-        <div class="qrow"><span>Loja virtual</span><b><small>a partir de</small>R$ 4.500</b></div>
-        <div class="qrow"><span>Aplicativo</span><b><small>a partir de</small>R$ 12.000</b></div>
+        <p class="sub">Preços para pequenos negócios de Ponta Grossa. Pague à vista, parcele ou pague por mês.</p>
+        <div class="qrow"><span>Site + hospedagem</span><b><small>sem entrada</small>R$ 89/mês</b></div>
+        <div class="qrow"><span>Site de 1 página</span><b><small>a partir de</small>R$ 397</b></div>
+        <div class="qrow"><span>Site institucional</span><b><small>a partir de</small>R$ 797</b></div>
+        <div class="qrow"><span>Site para clínica</span><b><small>a partir de</small>R$ 897</b></div>
+        <div class="qrow"><span>Loja virtual</span><b><small>a partir de</small>R$ 1.497</b></div>
+        <div class="qrow"><span>Aplicativo</span><b><small>a partir de</small>R$ 3.997</b></div>
         <a class="btn btn-ghost" href="#precos">O que está incluído</a>
       </aside>
     </div>
@@ -293,40 +301,58 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
         <h2>Preço claro antes de começar.</h2>
         <p class="lead">Os valores abaixo são o ponto de partida de cada tipo de projeto. Depois de uma conversa de 15 minutos, você recebe o orçamento fechado por escrito, com prazo e o que está incluído.</p>
       </div>
+      <div class="plano">
+        <div class="plano-txt">
+          <span class="badge">Novo · ideal para pequenos negócios</span>
+          <h3>Site + hospedagem por mês</h3>
+          <p>Seu site de 1 página no ar, com domínio .com.br, hospedagem, botão de WhatsApp e cadastro no Google. Sem pagar nada para começar.</p>
+        </div>
+        <div class="plano-preco">
+          <p class="amount"><small>sem entrada</small>R$ 89<em>/mês</em></p>
+          <p class="meta">contrato de 12 meses · pronto em até 5 dias</p>
+          <a class="btn btn-gold wa-link" href="https://wa.me/5542991339702" target="_blank" rel="noopener">Quero o plano mensal</a>
+        </div>
+      </div>
       <div class="price-grid">
         <div class="price">
-          <div class="kind"><h3>Landing page</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 1.200</p>
+          <div class="kind"><h3>Site de 1 página</h3></div>
+          <p class="amount"><small>a partir de</small>R$ 397</p>
+          <p class="parc">ou 3x de R$ 139 no cartão</p>
           <p class="meta">1 página · até 5 dias</p>
           <ul><li>Texto e layout focados em uma oferta</li><li>Botão de WhatsApp e formulário</li><li>Pronta para Google Ads e Meta Ads</li></ul>
         </div>
         <div class="price feat">
           <div class="kind"><h3>Site institucional</h3><span class="badge">Mais pedido</span></div>
-          <p class="amount"><small>a partir de</small>R$ 2.000</p>
+          <p class="amount"><small>a partir de</small>R$ 797</p>
+          <p class="parc">ou 5x de R$ 169 no cartão</p>
           <p class="meta">até 5 páginas · até 5 dias</p>
           <ul><li>Início, sobre, serviços, contato e blog</li><li>SEO local para Ponta Grossa</li><li>Cadastro no Google Meu Negócio</li></ul>
         </div>
         <div class="price">
           <div class="kind"><h3>Site para clínicas</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 2.500</p>
+          <p class="amount"><small>a partir de</small>R$ 897</p>
+          <p class="parc">ou 5x de R$ 189 no cartão</p>
           <p class="meta">até 7 páginas · até 5 dias</p>
           <ul><li>Especialidades, equipe e convênios</li><li>Agendamento pelo WhatsApp</li><li>Textos dentro das regras do CFM e CFO</li></ul>
         </div>
         <div class="price">
           <div class="kind"><h3>Loja virtual</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 4.500</p>
+          <p class="amount"><small>a partir de</small>R$ 1.497</p>
+          <p class="parc">ou 10x de R$ 159 no cartão</p>
           <p class="meta">até 50 produtos · até 5 dias</p>
           <ul><li>Pix, cartão e boleto</li><li>Cálculo de frete e Correios</li><li>Painel para você gerenciar pedidos</li></ul>
         </div>
         <div class="price">
           <div class="kind"><h3>Aplicativo</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 12.000</p>
+          <p class="amount"><small>a partir de</small>R$ 3.997</p>
+          <p class="parc">pagamento por etapa</p>
           <p class="meta">Android, iPhone ou web · sob escopo</p>
           <ul><li>Protótipo antes do desenvolvimento</li><li>Publicação na Play Store e App Store</li><li>Entregas em etapas</li></ul>
         </div>
         <div class="price">
           <div class="kind"><h3>Manutenção</h3></div>
-          <p class="amount"><small>a partir de</small>R$ 150<em>/mês</em></p>
+          <p class="amount"><small>a partir de</small>R$ 69<em>/mês</em></p>
+          <p class="parc">cancele quando quiser</p>
           <p class="meta">sem fidelidade</p>
           <ul><li>Atualizações, backup e segurança</li><li>Até 2 horas de ajustes por mês</li><li>Relatório mensal de visitas</li></ul>
         </div>
@@ -334,7 +360,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       <div class="factors">
         <div>
           <h3>O que muda o preço</h3>
-          <p>Domínio (.com.br custa R$ 40 por ano no Registro.br) e hospedagem são pagos à parte, no seu nome. Eu configuro tudo para você.</p>
+          <p>No plano mensal, domínio e hospedagem já estão inclusos. Nos outros planos, o domínio (.com.br custa R$ 40 por ano no Registro.br) e a hospedagem ficam no seu nome, e eu configuro tudo para você.</p>
         </div>
         <ul>
           <li>Quantidade de páginas</li><li>Textos prontos ou escritos por mim</li>
@@ -350,7 +376,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
       <div class="sec-head">
         <p class="eyebrow">Como funciona</p>
         <h2>Quatro etapas, do primeiro contato ao site no ar.</h2>
-        <p class="lead">Você acompanha cada etapa e aprova antes de seguirmos. O pagamento é dividido: 50% para começar e 50% na entrega.</p>
+        <p class="lead">Você acompanha cada etapa e aprova antes de seguirmos. Você paga à vista no Pix, parcela no cartão ou escolhe o plano mensal sem entrada.</p>
       </div>
       <div class="steps">
         <div class="step"><p class="n">01</p><h3>Conversa</h3><p>Entendo o seu negócio, os seus clientes e o que o site precisa resolver. Pode ser pelo WhatsApp ou numa chamada.</p><span class="d">1 dia</span></div>
@@ -414,12 +440,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
         <h2 style="margin-top:14px">Perguntas que todo cliente faz.</h2>
       </div>
       <div>
-        <details open><summary>Quanto custa um site em Ponta Grossa?</summary><p>Uma landing page começa em R$ 1.200 e um site institucional em R$ 2.000. Loja virtual parte de R$ 4.500 e aplicativos de R$ 12.000. O valor final depende do número de páginas, dos textos e das integrações, e você recebe tudo por escrito antes de começar.</p></details>
+        <details open><summary>Quanto custa um site em Ponta Grossa?</summary><p>O site de 1 página sai por R$ 397 à vista ou R$ 89 por mês com hospedagem inclusa, sem entrada. O site institucional começa em R$ 797, a loja virtual em R$ 1.497 e aplicativos em R$ 3.997. Tudo pode ser parcelado no cartão.</p></details>
         <details><summary>Em quanto tempo o site fica pronto?</summary><p>Entregamos o seu site pronto em até 5 dias, contando a partir do recebimento dos textos e fotos. Aplicativos têm prazo definido conforme o escopo.</p></details>
-        <details><summary>Tem mensalidade?</summary><p>Não é obrigatório. Você paga o projeto e o site é seu. Domínio e hospedagem ficam no seu nome e custam a partir de R$ 40 por ano e R$ 20 por mês. O plano de manutenção é opcional.</p></details>
+        <details><summary>Tem mensalidade?</summary><p>Só se você quiser. Você pode pagar o site uma vez e ele é seu, ou escolher o plano de R$ 89 por mês, que já inclui domínio, hospedagem e pequenos ajustes. A manutenção avulsa custa R$ 69 por mês e é opcional.</p></details>
         <details><summary>O site vai aparecer no Google?</summary><p>Sim. Todo site sai com SEO técnico, cadastro no Google Search Console e no Perfil da Empresa no Google, para você aparecer quando alguém pesquisar pelo seu serviço em Ponta Grossa.</p></details>
         <details><summary>Eu consigo mudar textos e fotos depois?</summary><p>Consegue. Entrego um painel simples e ensino você a usar. Se preferir não mexer, o plano de manutenção cobre as mudanças do mês.</p></details>
-        <details><summary>Como é o pagamento?</summary><p>50% na aprovação da proposta e 50% na entrega, por Pix ou cartão (com parcelamento). Para aplicativos, o pagamento é dividido por etapa.</p></details>
+        <details><summary>Como é o pagamento?</summary><p>À vista no Pix, parcelado no cartão ou pelo plano mensal sem entrada. Para aplicativos, o pagamento é dividido por etapa.</p></details>
         <details><summary>Atende fora de Ponta Grossa?</summary><p>Sim. Atendo presencialmente Ponta Grossa, Castro, Carambeí, Palmeira e Telêmaco Borba, e online qualquer cidade do Brasil.</p></details>
       </div>
     </div>
@@ -451,16 +477,16 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
   "name":"EF Criações",
   "description":"Criação de sites, landing pages, lojas virtuais e aplicativos em Ponta Grossa - PR.",
   "telephone":"+55-42-99133-9702",
-  "priceRange":"R$ 1.200 - R$ 12.000+",
+  "priceRange":"R$ 89/mês - R$ 3.997",
   "address":{"@type":"PostalAddress","addressLocality":"Ponta Grossa","addressRegion":"PR","addressCountry":"BR"},
   "areaServed":["Ponta Grossa","Castro","Carambeí","Palmeira","Telêmaco Borba"],
   "openingHours":"Mo-Fr 09:00-18:00",
   "makesOffer":[
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Landing page"},"priceSpecification":{"@type":"PriceSpecification","minPrice":1200,"priceCurrency":"BRL"}},
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site institucional"},"priceSpecification":{"@type":"PriceSpecification","minPrice":2000,"priceCurrency":"BRL"}},
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site para clínicas"},"priceSpecification":{"@type":"PriceSpecification","minPrice":2500,"priceCurrency":"BRL"}},
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Loja virtual"},"priceSpecification":{"@type":"PriceSpecification","minPrice":4500,"priceCurrency":"BRL"}},
-    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Aplicativo"},"priceSpecification":{"@type":"PriceSpecification","minPrice":12000,"priceCurrency":"BRL"}}
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site de 1 página"},"priceSpecification":{"@type":"PriceSpecification","minPrice":397,"priceCurrency":"BRL"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site institucional"},"priceSpecification":{"@type":"PriceSpecification","minPrice":797,"priceCurrency":"BRL"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site para clínicas"},"priceSpecification":{"@type":"PriceSpecification","minPrice":897,"priceCurrency":"BRL"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Loja virtual"},"priceSpecification":{"@type":"PriceSpecification","minPrice":1497,"priceCurrency":"BRL"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Aplicativo"},"priceSpecification":{"@type":"PriceSpecification","minPrice":3997,"priceCurrency":"BRL"}}
   ]
 }
 </script>
