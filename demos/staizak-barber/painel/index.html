@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="preto-prata">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0C0C0D">
+<title>Staizak Barber · Painel da loja</title>
+<link rel="icon" href="../favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="../tema.css">
+<script src="../config.js"></script>
+<script>window.BARBEARIA.logo="../"+window.BARBEARIA.logo;window.BARBEARIA.logoArte="../"+window.BARBEARIA.logoArte;</script>
+<script src="../nucleo.js"></script>
+<style>
+body{min-height:100vh}
+.layout{display:grid;grid-template-columns:232px 1fr;min-height:calc(100vh - 31px)}
+aside{background:var(--bg2);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:calc(100vh - 31px)}
+.marca{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}
+.marca img{width:42px;height:42px;border-radius:50%;border:1px solid var(--line)}
+.marca b{font-family:var(--font-display);font-size:17px;display:block;line-height:1.1}
+.marca small{color:var(--muted);font-size:12px}
+aside button.nav{display:flex;align-items:center;gap:11px;background:none;border:0;border-radius:10px;padding:10px 12px;color:var(--muted);font-weight:600;font-size:14.5px;text-align:left}
+aside button.nav svg{width:19px;height:19px;flex:none}
+aside button.nav:hover{background:var(--card);color:var(--text)}
+aside button.nav.on{background:var(--accent-soft);color:var(--accent)}
+aside .nav .badge{margin-left:auto;background:var(--accent);color:var(--on-accent);font-size:11px;border-radius:99px;padding:1px 7px}
+aside .rodape{margin-top:auto;font-size:12px;color:var(--muted);padding:10px 8px;line-height:1.5}
+aside .rodape a{color:var(--muted)}
+main{padding:22px 28px 40px;min-width:0}
+.topo{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.topo h1{font-family:var(--font-display);font-size:27px;margin:0;margin-right:auto}
+.topo .relogio{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.kpi small{color:var(--muted);font-size:12.5px;display:block}
+.kpi b{font-size:24px;display:block;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card h3{margin:0 0 12px;font-size:15.5px}
+.barra{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{background:var(--card);border:0;padding:8px 14px;color:var(--muted);font-weight:600;font-size:13.5px}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.data-nav{display:inline-flex;align-items:center;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px}
+.data-nav button{background:none;border:0;padding:6px 10px;border-radius:8px;font-size:16px;color:var(--text)}
+.data-nav button:hover{background:var(--card2)}
+.data-nav input{width:150px;border:0;background:transparent;padding:6px}
+.data-tit{font-weight:600;font-size:15px;margin-left:6px}
+
+/* agenda por barbeiro */
+.colunas{display:grid;gap:12px;grid-template-columns:repeat(var(--n,3),minmax(220px,1fr));overflow-x:auto}
+.col{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);min-height:200px;display:flex;flex-direction:column}
+.col-h{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;background:var(--card2);border:1px solid var(--accent2);color:var(--accent);flex:none}
+.col-h b{font-size:14.5px}.col-h small{color:var(--muted);font-size:12px;display:block}
+.col-b{padding:10px;display:flex;flex-direction:column;gap:8px}
+.at{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent2);border-radius:10px;padding:10px 12px}
+.at.chegou{border-left-color:var(--info)}.at.atendendo{border-left-color:var(--warn)}.at.concluido{border-left-color:var(--ok)}
+.at.falta,.at.cancelado{border-left-color:var(--bad);opacity:.6}
+.at.novo{box-shadow:0 0 0 2px var(--accent);animation:pisca 1.2s ease 3}
+@keyframes pisca{50%{box-shadow:0 0 0 6px var(--accent-soft)}}
+.at .l1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.at .h{font-weight:700;font-variant-numeric:tabular-nums}
+.at .cli{font-weight:600;font-size:14.5px;margin-top:2px}
+.at .sv{color:var(--muted);font-size:13px}
+.at .acoes{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.at .acoes button{padding:6px 10px;font-size:12.5px;border-radius:8px}
+.st{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.st.agendado{background:var(--accent-soft);color:var(--accent)}
+.st.chegou{background:rgba(111,168,245,.14);color:var(--info)}
+.st.atendendo{background:rgba(232,176,75,.14);color:var(--warn)}
+.st.concluido{background:rgba(76,195,138,.14);color:var(--ok)}
+.st.falta,.st.cancelado{background:rgba(229,103,95,.14);color:var(--bad)}
+.origem{font-size:11px;color:var(--muted)}
+.livre{color:var(--muted);font-size:13px;text-align:center;padding:16px 4px}
+
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th{text-align:left;color:var(--muted);font-weight:600;font-size:12.5px;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.t tr:last-child td{border-bottom:0}
+table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.t tr.click{cursor:pointer}table.t tr.click:hover td{background:var(--card2)}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+.scroll-x{overflow-x:auto}
+
+/* caixa */
+.pdv{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,1fr);gap:16px;align-items:start}
+.catalogo{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.item-b{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:left}
+.item-b:hover{border-color:var(--accent)}
+.item-b b{display:block;font-size:14px}.item-b span{color:var(--muted);font-size:13px}
+.pend{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);margin-bottom:8px}
+.pend .btn{margin-left:auto;padding:7px 12px;font-size:13px}
+.comanda{position:sticky;top:16px}
+.linha-item{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.linha-item .n{flex:1}
+.qtd{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px}
+.qtd button{background:none;border:0;width:26px;height:26px;color:var(--text)}
+.qtd span{min-width:20px;text-align:center;font-size:13px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px}
+.total b{font-size:30px;font-family:var(--font-display)}
+.formas{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.formas button{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 4px;font-weight:600;font-size:13px}
+.formas button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* equipe / horários */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--bg2);border-radius:8px;padding:5px 9px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.mini{padding:6px 10px;font-size:12.5px;border-radius:8px}
+.swatch{display:flex;gap:10px;flex-wrap:wrap}
+.swatch button{border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;background:var(--bg2);font-weight:600;font-size:14px}
+.swatch button.on{border-color:var(--accent)}
+.swatch i{width:30px;height:30px;border-radius:50%;display:block}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;width:min(460px,100%);max-height:90vh;overflow:auto}
+.modal h2{font-family:var(--font-display);margin:0 0 14px;font-size:22px}
+.modal .campos{display:grid;gap:12px}
+.modal .fim{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+
+/* login */
+.login{min-height:calc(100vh - 31px);display:grid;place-items:center;padding:20px}
+.login .box{width:min(400px,100%);text-align:center}
+.login img{width:150px;margin:0 auto 10px}
+.login h1{font-family:var(--font-display);font-size:26px;margin:4px 0}
+.login form{display:grid;gap:10px;margin-top:20px;text-align:left}
+
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  aside{position:sticky;top:0;height:auto;flex-direction:row;overflow-x:auto;padding:8px;z-index:10;border-right:0;border-bottom:1px solid var(--line)}
+  .marca,.rodape{display:none!important}
+  aside button.nav{flex-direction:column;gap:3px;font-size:11.5px;padding:7px 10px;flex:none}
+  aside .nav .badge{display:none}
+  main{padding:16px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pdv{grid-template-columns:1fr}
+  .colunas{grid-template-columns:1fr}
+  .topo h1{font-size:23px}
+}
+@media print{aside,.topo .btn,.barra,.demo-faixa,.noprint{display:none!important}.layout{display:block}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="demo-faixa">Demonstração criada pela EF Criações para a Staizak Barber</div>
+
+<div class="login" id="telaLogin" hidden>
+  <div class="box">
+    <img id="loginLogo" alt="">
+    <h1>Painel da loja</h1>
+    <p class="muted" id="loginMsg" style="font-size:14px"></p>
+    <form id="formLogin">
+      <div><label for="lSenha">Senha</label><input id="lSenha" type="password" autocomplete="current-password" required minlength="4"></div>
+      <div id="boxConf" hidden><label for="lConf">Repita a senha</label><input id="lConf" type="password" autocomplete="new-password"></div>
+      <button class="btn prim" style="padding:13px">Entrar</button>
+      <p class="neg" id="loginErro" style="font-size:13.5px;margin:0" hidden></p>
+      <button type="button" class="btn ghost" id="btnDemo">Entrar sem senha (só na demonstração)</button>
+    </form>
+  </div>
+</div>
+
+<div class="layout" id="telaApp" hidden>
+  <aside>
+    <div class="marca"><img id="asideLogo" alt=""><div><b id="asideNome"></b><small>Painel da loja</small></div></div>
+    <button class="nav on" data-v="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Agenda<span class="badge" id="bdgHoje"></span></button>
+    <button class="nav" data-v="caixa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.5"/><path d="M6 10v5M18 10v5"/></svg>Caixa<span class="badge" id="bdgPend"></span></button>
+    <button class="nav" data-v="financeiro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Financeiro</button>
+    <button class="nav" data-v="vendas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>Vendas</button>
+    <button class="nav" data-v="equipe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14.5c2.4.2 4.2 1.8 5 4.5"/></svg>Equipe</button>
+    <button class="nav" data-v="horarios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horários</button>
+    <button class="nav" data-v="config"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Configurações</button>
+    <div class="rodape"><a href="../" target="_blank">Abrir link do cliente ↗</a><br>Site desenvolvido por EF Criações</div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+(function(){
+const {C,S,cfg,util:U}=BB;
+const $=s=>document.querySelector(s), esc=U.esc;
+const NOME_ST={agendado:"Agendado",chegou:"Chegou",atendendo:"Em atendimento",concluido:"Concluído",falta:"Faltou",cancelado:"Cancelado"};
+const FORMAS={pix:"Pix",dinheiro:"Dinheiro",debito:"Débito",credito:"Crédito"};
+const ini=n=>(n||"?").trim().charAt(0).toUpperCase();
+let view="agenda", dia=U.hoje(), modoAgenda="dia", periodo="hoje", destaque=new Set();
+let comanda=novaComanda();
+function novaComanda(){return{itens:[],cliente:"",barbeiroId:(cfg.barbeiros()[0]||{}).id,desconto:0,descTipo:"r",forma:"pix",recebido:"",agendamentoId:null};}
+
+/* ---------- login (senha PBKDF2-SHA-256 com salt) ---------- */
+async function derivar(senha,saltB64){
+  const salt=saltB64?Uint8Array.from(atob(saltB64),c=>c.charCodeAt(0)):crypto.getRandomValues(new Uint8Array(16));
+  const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(senha),"PBKDF2",false,["deriveBits"]);
+  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt,iterations:150000},k,256);
+  const b64=a=>btoa(String.fromCharCode(...new Uint8Array(a)));
+  return{salt:b64(salt),hash:b64(bits)};
+}
+function telaLogin(){
+  const s=S.get("senha",null);
+  $("#loginLogo").src=C.logoArte; $("#telaLogin").hidden=false; $("#telaApp").hidden=true;
+  $("#loginMsg").textContent=s?"Digite a senha principal para entrar.":"Primeiro acesso: crie a senha principal do painel. Não existe senha padrão.";
+  $("#boxConf").hidden=!!s;
+}
+$("#formLogin").onsubmit=async e=>{
+  e.preventDefault(); const s=S.get("senha",null), v=$("#lSenha").value, err=$("#loginErro"); err.hidden=true;
+  if(!crypto.subtle){entrar();return;}
+  if(!s){ if(v!==$("#lConf").value){err.textContent="As senhas não conferem.";err.hidden=false;return;}
+    S.set("senha",await derivar(v)); entrar(); toast("Senha principal criada."); }
+  else { const d=await derivar(v,s.salt); if(d.hash===s.hash)entrar(); else {err.textContent="Senha incorreta.";err.hidden=false;} }
+};
+$("#btnDemo").onclick=entrar;
+function entrar(){try{sessionStorage.setItem("bb_logado","1")}catch(e){} $("#telaLogin").hidden=true;$("#telaApp").hidden=false;render();}
+
+/* ---------- navegação ---------- */
+$("#asideLogo").src=C.logo; $("#asideNome").textContent=C.nome;
+document.querySelectorAll("aside .nav").forEach(b=>b.onclick=()=>{view=b.dataset.v;render();window.scrollTo(0,0);});
+function render(){
+  document.querySelectorAll("aside .nav").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+  badges();
+  ({agenda,caixa,financeiro,vendas,equipe,horarios,config})[view]();
+}
+function badges(){
+  const h=BB.agendamentos().filter(a=>a.data===U.hoje()&&["agendado","chegou","atendendo"].includes(a.status)).length;
+  const p=pendentes().length;
+  $("#bdgHoje").textContent=h||""; $("#bdgHoje").hidden=!h; $("#bdgPend").textContent=p||""; $("#bdgPend").hidden=!p;
+}
+function topo(t,extra){return `<div class="topo"><h1>${t}</h1><span class="relogio">${U.dataLonga(U.hoje())} · <span id="relogio">${U.hhmm(U.agoraMin())}</span></span>${extra||""}</div>`;}
+
+/* ---------- AGENDA ---------- */
+function agenda(){
+  const ag=BB.agendamentos(), hj=ag.filter(a=>a.data===dia);
+  const ativos=hj.filter(a=>!["cancelado"].includes(a.status));
+  const fat=BB.movimentos().filter(m=>m.data===dia&&m.tipo==="entrada"&&!m.interno).reduce((s,m)=>s+m.valor,0);
+  const h=BB.horarioDoDia(dia);
+  let html=topo("Agenda",`<button class="btn prim" id="btnNovoAt">+ Atendimento sem agendamento</button>`);
+  html+=`<div class="kpis">
+    <div class="kpi"><small>Atendimentos ${dia===U.hoje()?"hoje":"no dia"}</small><b>${ativos.filter(a=>a.status!=="falta").length}</b><span>${hj.filter(a=>a.origem==="app").length} pelo link do cliente</span></div>
+    <div class="kpi"><small>Concluídos</small><b>${hj.filter(a=>a.status==="concluido").length}</b><span>${hj.filter(a=>["agendado","chegou","atendendo"].includes(a.status)).length} ainda na fila</span></div>
+    <div class="kpi"><small>Faltas</small><b>${hj.filter(a=>a.status==="falta").length}</b><span>${hj.filter(a=>a.status==="cancelado").length} cancelados</span></div>
+    <div class="kpi"><small>Faturamento do dia</small><b>${U.brl(fat)}</b><span>previsto ${U.brl(ativos.filter(a=>a.status!=="falta").reduce((s,a)=>s+a.preco,0))}</span></div></div>`;
+  html+=`<div class="barra"><div class="seg"><button data-modo="dia" class="${modoAgenda==="dia"?"on":""}">Dia</button><button data-modo="31" class="${modoAgenda==="31"?"on":""}">Próximos 31 dias</button></div>`;
+  if(modoAgenda==="dia") html+=`<div class="data-nav"><button data-mv="-1" aria-label="Dia anterior">‹</button><input type="date" id="inDia" value="${dia}"><button data-mv="1" aria-label="Próximo dia">›</button></div>
+    <button class="btn" id="btnHoje">Hoje</button><button class="btn" id="btnProx">Próxima data com agendamentos ›</button><span class="data-tit">${U.dataLonga(dia)}${h.aberto?` · ${h.abre}–${h.fecha}${h.especial?" ("+esc(h.especial)+")":""}`:` · <span class="neg">${esc(h.motivo)}</span>`}</span>`;
+  html+=`</div>`;
+  if(modoAgenda==="31"){
+    const linhas=[];for(let i=0;i<31;i++){const d=U.addDias(U.hoje(),i);const l=ag.filter(a=>a.data===d&&a.status!=="cancelado");const hd=BB.horarioDoDia(d);
+      linhas.push(`<tr class="click" data-dia="${d}"><td>${U.dataCurta(d)}</td><td>${U.DIAS[U.parse(d).getDay()]}</td><td>${hd.aberto?hd.abre+"–"+hd.fecha:`<span class="neg">${esc(hd.motivo)}</span>`}</td>
+      <td class="num">${l.length}</td>${cfg.barbeiros().map(b=>`<td class="num">${l.filter(a=>a.barbeiroId===b.id).length||"–"}</td>`).join("")}<td class="num">${U.brl(l.reduce((s,a)=>s+a.preco,0))}</td></tr>`);}
+    html+=`<div class="card scroll-x"><table class="t"><thead><tr><th>Data</th><th>Dia</th><th>Expediente</th><th class="num">Agendados</th>${cfg.barbeiros().map(b=>`<th class="num">${esc(b.nome)}</th>`).join("")}<th class="num">Previsto</th></tr></thead><tbody>${linhas.join("")}</tbody></table></div>`;
+  } else {
+    const bs=cfg.barbeiros();
+    html+=`<div class="colunas" style="--n:${Math.max(1,bs.length)}">`+bs.map(b=>{
+      const l=hj.filter(a=>a.barbeiroId===b.id).sort((x,y)=>x.hora.localeCompare(y.hora));
+      const trab=BB.barbeiroTrabalha(b,dia);
+      return `<div class="col"><div class="col-h"><div class="av">${esc(ini(b.nome))}</div><div><b>${esc(b.nome)}</b><small>${trab?l.filter(a=>a.status!=="cancelado").length+" atendimentos":"Folga / não trabalha"}</small></div></div>
+      <div class="col-b">${l.length?l.map(cardAt).join(""):`<div class="livre">${trab&&h.aberto?"Nenhum horário marcado":"—"}</div>`}</div></div>`}).join("")+`</div>`;
+  }
+  $("#main").innerHTML=html;
+  const m=$("#main");
+  m.querySelectorAll("[data-modo]").forEach(b=>b.onclick=()=>{modoAgenda=b.dataset.modo;agenda();});
+  m.querySelectorAll("[data-mv]").forEach(b=>b.onclick=()=>{dia=U.addDias(dia,+b.dataset.mv);agenda();});
+  m.querySelectorAll("[data-dia]").forEach(r=>r.onclick=()=>{dia=r.dataset.dia;modoAgenda="dia";agenda();});
+  const inD=$("#inDia"); if(inD)inD.onchange=()=>{if(inD.value){dia=inD.value;agenda();}};
+  const bh=$("#btnHoje"); if(bh)bh.onclick=()=>{dia=U.hoje();agenda();};
+  const bp=$("#btnProx"); if(bp)bp.onclick=()=>{const d=ag.filter(a=>a.data>dia&&a.status==="agendado").map(a=>a.data).sort()[0];if(d){dia=d;agenda();}else toast("Nenhum agendamento depois desta data.");};
+  $("#btnNovoAt").onclick=()=>modalAtendimento();
+  m.querySelectorAll("[data-acao]").forEach(b=>b.onclick=()=>acao(b.dataset.id,b.dataset.acao));
+}
+function cardAt(a){
+  const pago=a.pago?`<span class="origem">✓ pago${a.forma?" · "+FORMAS[a.forma]:""}</span>`:"";
+  let ac="";
+  if(a.status==="agendado")ac=`<button class="btn mini" data-acao="chegou" data-id="${a.id}">Chegou</button><button class="btn mini" data-acao="atendendo" data-id="${a.id}">Iniciar</button><button class="btn mini bad" data-acao="falta" data-id="${a.id}">Falta</button>`;
+  else if(a.status==="chegou")ac=`<button class="btn mini prim" data-acao="atendendo" data-id="${a.id}">Iniciar</button><button class="btn mini bad" data-acao="falta" data-id="${a.id}">Falta</button>`;
+  else if(a.status==="atendendo")ac=`<button class="btn mini ok" data-acao="concluido" data-id="${a.id}">Concluir e cobrar</button>`;
+  else if(a.status==="concluido"&&!a.pago)ac=`<button class="btn mini prim" data-acao="cobrar" data-id="${a.id}">Cobrar ${U.brl(a.preco)}</button>`;
+  else if(a.status==="falta"||a.status==="cancelado")ac=`<button class="btn mini ghost" data-acao="agendado" data-id="${a.id}">Desfazer</button>`;
+  return `<div class="at ${a.status} ${destaque.has(a.id)?"novo":""}"><div class="l1"><span class="h">${a.hora}</span><span class="st ${a.status}">${NOME_ST[a.status]}</span></div>
+    <div class="cli">${esc(a.cliente)}</div><div class="sv">${esc(a.servicoNome)} · ${U.brl(a.preco)}</div>
+    <div class="origem">${a.origem==="app"?"Agendado pelo link":"Balcão"}${a.telefone?" · "+esc(a.telefone):""} ${pago}</div>
+    ${ac?`<div class="acoes">${ac}</div>`:""}</div>`;
+}
+function acao(id,ac){
+  if(ac==="cobrar"){abrirCobranca(id);return;}
+  BB.atualizarAgendamento(id,{status:ac});
+  if(ac==="concluido"){abrirCobranca(id);return;}
+  toast(NOME_ST[ac]==="Agendado"?"Status desfeito.":"Marcado como: "+NOME_ST[ac]); render();
+}
+function abrirCobranca(id){
+  const a=BB.agendamentos().find(x=>x.id===id); if(!a)return;
+  comanda=novaComanda(); comanda.cliente=a.cliente; comanda.barbeiroId=a.barbeiroId; comanda.agendamentoId=a.id;
+  comanda.itens=[{tipo:"servico",id:a.servicoId,nome:a.servicoNome,preco:a.preco,qtd:1}];
+  view="caixa"; render();
+}
+function modalAtendimento(){
+  const bs=cfg.barbeiros(), ss=cfg.servicos();
+  modal(`<h2>Atendimento sem agendamento</h2><div class="campos">
+    <div><label>Cliente</label><input id="mCli" placeholder="Nome do cliente"></div>
+    <div class="grid2"><div><label>Serviço</label><select id="mServ">${ss.map(s=>`<option value="${s.id}">${esc(s.nome)} · ${U.brl(s.preco)}</option>`).join("")}</select></div>
+    <div><label>Barbeiro</label><select id="mBarb">${bs.map(b=>`<option value="${b.id}">${esc(b.nome)}</option>`).join("")}</select></div></div>
+    <div class="grid2"><div><label>Data</label><input type="date" id="mData" value="${dia}"></div><div><label>Horário</label><input type="time" id="mHora" value="${U.hhmm(Math.ceil(U.agoraMin()/5)*5%1440)}" step="300"></div></div>
+    <label style="display:flex;gap:8px;align-items:center;color:var(--text);font-size:14px"><input type="checkbox" id="mJa" checked style="width:auto"> Já iniciar o atendimento</label>
+  </div><div class="fim"><button class="btn ghost" data-fechar>Cancelar</button><button class="btn prim" id="mOk">Adicionar</button></div>`,()=>{
+    $("#mOk").onclick=()=>{
+      const a=BB.criarAgendamento({cliente:$("#mCli").value.trim()||"Cliente balcão",servicoId:$("#mServ").value,barbeiroId:$("#mBarb").value,data:$("#mData").value,hora:$("#mHora").value,origem:"balcao",forcar:true,status:$("#mJa").checked?"atendendo":"agendado"});
+      fecharModal(); dia=a.data; view="agenda"; modoAgenda="dia"; toast("Atendimento adicionado."); render();
+    };
+  });
+}
+
+/* ---------- CAIXA ---------- */
+function pendentes(){return BB.agendamentos().filter(a=>a.status==="concluido"&&!a.pago&&a.data<=U.hoje()&&a.data>=U.addDias(U.hoje(),-7));}
+function caixa(){
+  const pend=pendentes(), movH=BB.movimentos().filter(m=>m.data===U.hoje());
+  const porForma=Object.keys(FORMAS).map(f=>[f,movH.filter(m=>m.tipo==="entrada"&&!m.interno&&m.forma===f).reduce((s,m)=>s+m.valor,0)]);
+  const dinheiroCaixa=movH.filter(m=>m.forma==="dinheiro").reduce((s,m)=>s+(m.tipo==="entrada"?m.valor:-m.valor),0);
+  let html=topo("Caixa",`<button class="btn" id="btnSangria">Sangria / retirada</button><button class="btn" id="btnSupr">Suprimento</button>`);
+  html+=`<div class="kpis">${porForma.map(([f,v])=>`<div class="kpi"><small>${FORMAS[f]} hoje</small><b>${U.brl(v)}</b></div>`).join("")}</div>`;
+  html+=`<div class="pdv"><div>
+    ${pend.length?`<div class="card" style="margin-bottom:16px"><h3>Atendimentos concluídos aguardando pagamento</h3>${pend.map(a=>`<div class="pend"><div class="av">${esc(ini(a.cliente))}</div><div><b style="font-size:14px">${esc(a.cliente)}</b><div class="muted" style="font-size:12.5px">${a.data===U.hoje()?"":U.dataCurta(a.data)+" · "}${a.hora} · ${esc(a.servicoNome)} · ${esc((BB.barbeiro(a.barbeiroId)||{}).nome||"")}</div></div><button class="btn prim" data-cobrar="${a.id}">Cobrar ${U.brl(a.preco)}</button></div>`).join("")}</div>`:""}
+    <div class="card" style="margin-bottom:16px"><h3>Serviços</h3><div class="catalogo">${cfg.servicos().map(s=>`<button class="item-b" data-add="servico:${s.id}"><b>${esc(s.nome)}</b><span>${U.brl(s.preco)}</span></button>`).join("")}</div></div>
+    <div class="card"><h3>Produtos e bebidas</h3><div class="catalogo">${cfg.produtos().map(p=>`<button class="item-b" data-add="produto:${p.id}"><b>${esc(p.nome)}</b><span>${U.brl(p.preco)}</span></button>`).join("")}</div></div>
+    <div class="card" style="margin-top:16px"><h3>Dinheiro na gaveta agora</h3><b style="font-size:26px">${U.brl(dinheiroCaixa)}</b><p class="muted" style="font-size:13px;margin:6px 0 0">Troco inicial + vendas em dinheiro − sangrias de hoje.</p></div>
+  </div><div class="card comanda" id="comanda"></div></div>`;
+  $("#main").innerHTML=html;
+  $("#main").querySelectorAll("[data-cobrar]").forEach(b=>b.onclick=()=>abrirCobranca(b.dataset.cobrar));
+  $("#main").querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const [t,id]=b.dataset.add.split(":");const it=(t==="servico"?cfg.servicos():cfg.produtos()).find(x=>x.id===id);
+    const ex=comanda.itens.find(x=>x.id===id&&x.tipo===t); if(ex)ex.qtd++; else comanda.itens.push({tipo:t,id,nome:it.nome,preco:it.preco,qtd:1}); renderComanda();});
+  $("#btnSangria").onclick=()=>modalMov("saida","Sangria");
+  $("#btnSupr").onclick=()=>modalMov("entrada","Suprimento");
+  renderComanda();
+}
+function totais(){const sub=comanda.itens.reduce((s,i)=>s+i.preco*i.qtd,0);const d=Math.min(sub,comanda.descTipo==="p"?sub*(+comanda.desconto||0)/100:(+comanda.desconto||0));return{sub,desc:Math.round(d*100)/100,total:Math.round((sub-d)*100)/100};}
+function renderComanda(){
+  const el=$("#comanda"); if(!el)return; const t=totais();
+  el.innerHTML=`<h3>Comanda ${comanda.agendamentoId?'<span class="tag" style="margin-left:6px">do agendamento</span>':""}</h3>
+  <div class="grid2"><div><label>Cliente</label><input id="cCli" value="${esc(comanda.cliente)}" placeholder="Opcional"></div>
+  <div><label>Barbeiro</label><select id="cBarb">${cfg.barbeiros().map(b=>`<option value="${b.id}" ${b.id===comanda.barbeiroId?"selected":""}>${esc(b.nome)}</option>`).join("")}</select></div></div>
+  <div style="margin-top:10px">${comanda.itens.length?comanda.itens.map((i,k)=>`<div class="linha-item"><span class="n">${esc(i.nome)}</span><span class="qtd"><button data-q="${k}:-1">−</button><span>${i.qtd}</span><button data-q="${k}:1">+</button></span><span style="min-width:78px;text-align:right">${U.brl(i.preco*i.qtd)}</span></div>`).join(""):`<div class="livre">Toque em um serviço ou produto para adicionar.</div>`}</div>
+  <div class="grid2" style="margin-top:12px"><div><label>Desconto</label><input id="cDesc" inputmode="decimal" value="${comanda.desconto||""}" placeholder="0"></div>
+  <div><label>&nbsp;</label><div class="seg" style="width:100%"><button data-dt="r" class="${comanda.descTipo==="r"?"on":""}" style="flex:1">R$</button><button data-dt="p" class="${comanda.descTipo==="p"?"on":""}" style="flex:1">%</button></div></div></div>
+  <div class="formas">${Object.entries(FORMAS).map(([k,v])=>`<button data-f="${k}" class="${comanda.forma===k?"on":""}">${v}</button>`).join("")}</div>
+  ${comanda.forma==="dinheiro"?`<div class="grid2"><div><label>Valor recebido</label><input id="cRec" inputmode="decimal" value="${comanda.recebido}"></div><div><label>Troco</label><div style="padding:10px 0;font-weight:700;font-size:17px" id="cTroco"></div></div></div>`:""}
+  <div class="muted" style="display:flex;justify-content:space-between;font-size:13.5px;margin-top:12px"><span>Subtotal</span><span>${U.brl(t.sub)}</span></div>
+  ${t.desc?`<div class="muted" style="display:flex;justify-content:space-between;font-size:13.5px"><span>Desconto</span><span>− ${U.brl(t.desc)}</span></div>`:""}
+  <div class="total"><span>Total</span><b>${U.brl(t.total)}</b></div>
+  <div class="grid2"><button class="btn ghost" id="cLimpar">Limpar</button><button class="btn prim" id="cFinal" ${comanda.itens.length?"":"disabled"} style="padding:13px">Finalizar pagamento</button></div>`;
+  const troco=()=>{const r=parseFloat(String(comanda.recebido).replace(",","."))||0;const tr=$("#cTroco");if(tr)tr.textContent=r?U.brl(Math.max(0,r-totais().total)):"—";};troco();
+  $("#cCli").oninput=e=>comanda.cliente=e.target.value;
+  $("#cBarb").onchange=e=>comanda.barbeiroId=e.target.value;
+  $("#cDesc").onchange=e=>{comanda.desconto=parseFloat(e.target.value.replace(",","."))||0;renderComanda();};
+  const rec=$("#cRec"); if(rec)rec.oninput=e=>{comanda.recebido=e.target.value;troco();};
+  el.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const [k,d]=b.dataset.q.split(":").map(Number);comanda.itens[k].qtd+=d;if(comanda.itens[k].qtd<1)comanda.itens.splice(k,1);renderComanda();});
+  el.querySelectorAll("[data-dt]").forEach(b=>b.onclick=()=>{comanda.descTipo=b.dataset.dt;renderComanda();});
+  el.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{comanda.forma=b.dataset.f;renderComanda();});
+  $("#cLimpar").onclick=()=>{comanda=novaComanda();renderComanda();};
+  $("#cFinal").onclick=finalizar;
+}
+function finalizar(){
+  const t=totais(); const b=BB.barbeiro(comanda.barbeiroId);
+  const mv={id:U.uid(),data:U.hoje(),hora:U.hhmm(U.agoraMin()),tipo:"entrada",categoria:comanda.itens.some(i=>i.tipo==="servico")?"Atendimento":"Venda de produto",
+    descricao:comanda.itens.map(i=>(i.qtd>1?i.qtd+"x ":"")+i.nome).join(", ")+(comanda.cliente?" - "+comanda.cliente:""),cliente:comanda.cliente,barbeiroId:comanda.barbeiroId,
+    agendamentoId:comanda.agendamentoId,itens:comanda.itens,subtotal:t.sub,desconto:t.desc,valor:t.total,forma:comanda.forma};
+  const l=BB.movimentos();l.push(mv);BB.salvarMovimentos(l);
+  if(comanda.agendamentoId)BB.atualizarAgendamento(comanda.agendamentoId,{pago:true,forma:comanda.forma,status:"concluido"});
+  toast(`Pagamento de ${U.brl(t.total)} registrado (${FORMAS[comanda.forma]}).`);
+  comanda=novaComanda(); render();
+}
+function modalMov(tipo,cat){
+  modal(`<h2>${tipo==="saida"?"Saída":"Entrada"} manual</h2><div class="campos">
+   <div class="grid2"><div><label>Tipo</label><select id="mTipo"><option value="entrada" ${tipo==="entrada"?"selected":""}>Entrada</option><option value="saida" ${tipo==="saida"?"selected":""}>Saída</option></select></div>
+   <div><label>Categoria</label><select id="mCat">${["Sangria","Suprimento","Compras","Contas","Aluguel","Comissão","Outros"].map(c=>`<option ${c===cat?"selected":""}>${c}</option>`).join("")}</select></div></div>
+   <div><label>Descrição</label><input id="mDesc" placeholder="Ex.: retirada para depósito"></div>
+   <div class="grid2"><div><label>Valor (R$)</label><input id="mVal" inputmode="decimal" placeholder="0,00"></div>
+   <div><label>Forma</label><select id="mForma">${Object.entries(FORMAS).map(([k,v])=>`<option value="${k}" ${k==="dinheiro"?"selected":""}>${v}</option>`).join("")}</select></div></div>
+   </div><div class="fim"><button class="btn ghost" data-fechar>Cancelar</button><button class="btn prim" id="mOk">Lançar</button></div>`,()=>{
+    $("#mOk").onclick=()=>{const v=parseFloat($("#mVal").value.replace(",","."));if(!v){toast("Informe o valor.");return;}
+      const cat=$("#mCat").value;
+      const l=BB.movimentos();l.push({id:U.uid(),manual:true,data:U.hoje(),hora:U.hhmm(U.agoraMin()),tipo:$("#mTipo").value,categoria:cat,descricao:$("#mDesc").value.trim()||cat,valor:v,forma:$("#mForma").value,interno:cat==="Suprimento"});
+      BB.salvarMovimentos(l);fecharModal();toast("Lançamento registrado.");render();};
+  });
+}
+
+/* ---------- FINANCEIRO ---------- */
+function noPeriodo(d){const h=U.hoje();if(periodo==="hoje")return d===h;if(periodo==="7")return d>U.addDias(h,-7)&&d<=h;if(periodo==="mes")return d.slice(0,7)===h.slice(0,7)&&d<=h;return true;}
+const segPeriodo=()=>`<div class="seg">${[["hoje","Hoje"],["7","7 dias"],["mes","Este mês"],["tudo","Tudo"]].map(([k,v])=>`<button data-p="${k}" class="${periodo===k?"on":""}">${v}</button>`).join("")}</div>`;
+function financeiro(){
+  const ms=BB.movimentos().filter(m=>noPeriodo(m.data)).sort((a,b)=>(b.data+b.hora).localeCompare(a.data+a.hora));
+  const ent=ms.filter(m=>m.tipo==="entrada"&&!m.interno).reduce((s,m)=>s+m.valor,0), sai=ms.filter(m=>m.tipo==="saida"&&m.categoria!=="Sangria").reduce((s,m)=>s+m.valor,0);
+  const din=BB.movimentos().filter(m=>m.data===U.hoje()&&m.forma==="dinheiro").reduce((s,m)=>s+(m.tipo==="entrada"?m.valor:-m.valor),0);
+  // gráfico simples por dia (últimos 7)
+  const dias=[];for(let i=6;i>=0;i--){const d=U.addDias(U.hoje(),-i);dias.push([d,BB.movimentos().filter(m=>m.data===d&&m.tipo==="entrada"&&!m.interno).reduce((s,m)=>s+m.valor,0)]);}
+  const mx=Math.max(1,...dias.map(x=>x[1]));
+  let html=topo("Financeiro",`<button class="btn prim" id="btnLanc">+ Lançamento manual</button>`);
+  html+=`<div class="barra">${segPeriodo()}</div>
+  <div class="kpis"><div class="kpi"><small>Entradas</small><b class="pos">${U.brl(ent)}</b></div><div class="kpi"><small>Saídas</small><b class="neg">${U.brl(sai)}</b></div>
+  <div class="kpi"><small>Saldo</small><b>${U.brl(ent-sai)}</b></div><div class="kpi"><small>Dinheiro em caixa (hoje)</small><b>${U.brl(din)}</b></div></div>
+  <div class="card" style="margin-bottom:16px"><h3>Faturamento dos últimos 7 dias</h3>
+   <div style="display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px">${dias.map(([d,v])=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+   <span style="font-size:11.5px;color:var(--muted)">${v?Math.round(v):""}</span><div title="${U.brl(v)}" style="width:100%;max-width:46px;height:${Math.max(2,v/mx*100)}%;background:${d===U.hoje()?"var(--accent)":"var(--accent2)"};border-radius:6px 6px 2px 2px;opacity:${d===U.hoje()?1:.75}"></div>
+   <span style="font-size:12px;color:var(--muted)">${U.DIAS_C[U.parse(d).getDay()]}</span></div>`).join("")}</div></div>
+  <div class="card scroll-x"><h3>Lançamentos (${ms.length})</h3><table class="t"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Forma</th><th class="num">Valor</th><th></th></tr></thead><tbody>
+  ${ms.slice(0,150).map(m=>`<tr><td>${U.dataCurta(m.data)} ${m.hora}</td><td>${esc(m.descricao)}</td><td>${esc(m.categoria)}</td><td>${FORMAS[m.forma]||""}</td>
+   <td class="num ${m.tipo==="entrada"?"pos":"neg"}">${m.tipo==="entrada"?"+":"−"} ${U.brl(m.valor)}</td><td>${m.manual?`<button class="btn mini ghost" data-del="${m.id}">Excluir</button>`:""}</td></tr>`).join("")||`<tr><td colspan="6" class="livre">Sem lançamentos no período.</td></tr>`}</tbody></table></div>`;
+  $("#main").innerHTML=html;
+  $("#main").querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{periodo=b.dataset.p;financeiro();});
+  $("#main").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm("Excluir este lançamento?")){BB.salvarMovimentos(BB.movimentos().filter(m=>m.id!==b.dataset.del));financeiro();}});
+  $("#btnLanc").onclick=()=>modalMov("saida","Compras");
+}
+
+/* ---------- VENDAS ---------- */
+let filtroBarb="todos";
+function vendas(){
+  const vs=BB.movimentos().filter(m=>m.tipo==="entrada"&&m.itens&&noPeriodo(m.data)&&(filtroBarb==="todos"||m.barbeiroId===filtroBarb)).sort((a,b)=>(b.data+b.hora).localeCompare(a.data+a.hora));
+  const tot=vs.reduce((s,m)=>s+m.valor,0);
+  let html=topo("Vendas",`<button class="btn prim" id="btnCSV">Exportar CSV</button>`);
+  html+=`<div class="barra">${segPeriodo()}<select id="fBarb" style="width:auto"><option value="todos">Todos os barbeiros</option>${cfg.barbeiros().map(b=>`<option value="${b.id}" ${filtroBarb===b.id?"selected":""}>${esc(b.nome)}</option>`).join("")}</select></div>
+  <div class="kpis"><div class="kpi"><small>Vendas</small><b>${vs.length}</b></div><div class="kpi"><small>Total</small><b>${U.brl(tot)}</b></div>
+  <div class="kpi"><small>Ticket médio</small><b>${U.brl(vs.length?tot/vs.length:0)}</b></div><div class="kpi"><small>Descontos dados</small><b>${U.brl(vs.reduce((s,m)=>s+(m.desconto||0),0))}</b></div></div>
+  <div class="card scroll-x" style="margin-bottom:16px"><h3>Por barbeiro</h3><table class="t"><thead><tr><th>Barbeiro</th><th class="num">Atendimentos</th><th class="num">Serviços</th><th class="num">Produtos</th><th class="num">Comissão</th><th class="num">A pagar</th></tr></thead><tbody>
+  ${cfg.barbeiros().map(b=>{const l=vs.filter(m=>m.barbeiroId===b.id);const sv=l.reduce((s,m)=>s+m.itens.filter(i=>i.tipo==="servico").reduce((x,i)=>x+i.preco*i.qtd,0)-(m.desconto||0),0);
+    const pr=l.reduce((s,m)=>s+m.itens.filter(i=>i.tipo==="produto").reduce((x,i)=>x+i.preco*i.qtd,0),0);
+    return `<tr><td>${esc(b.nome)}</td><td class="num">${l.length}</td><td class="num">${U.brl(sv)}</td><td class="num">${U.brl(pr)}</td><td class="num">${b.comissao||0}%</td><td class="num"><b>${U.brl(sv*(b.comissao||0)/100)}</b></td></tr>`}).join("")}</tbody></table></div>
+  <div class="card scroll-x"><h3>Todas as vendas</h3><table class="t"><thead><tr><th>Data</th><th>Cliente</th><th>Itens</th><th>Barbeiro</th><th>Forma</th><th class="num">Desc.</th><th class="num">Total</th></tr></thead><tbody>
+  ${vs.slice(0,200).map(m=>`<tr><td>${U.dataCurta(m.data)} ${m.hora}</td><td>${esc(m.cliente||"—")}</td><td>${esc(m.itens.map(i=>(i.qtd>1?i.qtd+"x ":"")+i.nome).join(", "))}</td><td>${esc((BB.barbeiro(m.barbeiroId)||{}).nome||"")}</td><td>${FORMAS[m.forma]}</td><td class="num">${m.desconto?U.brl(m.desconto):"—"}</td><td class="num">${U.brl(m.valor)}</td></tr>`).join("")||`<tr><td colspan="7" class="livre">Sem vendas no período.</td></tr>`}</tbody></table></div>`;
+  $("#main").innerHTML=html;
+  $("#main").querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{periodo=b.dataset.p;vendas();});
+  $("#fBarb").onchange=e=>{filtroBarb=e.target.value;vendas();};
+  $("#btnCSV").onclick=()=>{
+    const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"';
+    const linhas=[["Data","Hora","Cliente","Itens","Barbeiro","Forma","Subtotal","Desconto","Total"].join(";")].concat(vs.map(m=>[U.dataCurta(m.data)+"/"+m.data.slice(0,4),m.hora,m.cliente||"",m.itens.map(i=>i.qtd+"x "+i.nome).join(" + "),(BB.barbeiro(m.barbeiroId)||{}).nome||"",FORMAS[m.forma],(m.subtotal||m.valor).toFixed(2).replace(".",","),(m.desconto||0).toFixed(2).replace(".",","),m.valor.toFixed(2).replace(".",",")].map(q).join(";")));
+    const blob=new Blob(["﻿"+linhas.join("\r\n")],{type:"text/csv;charset=utf-8"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="vendas-"+C.id+"-"+U.hoje()+".csv";document.body.appendChild(a);a.click();a.remove();
+    toast("Planilha CSV baixada.");
+  };
+}
+
+/* ---------- EQUIPE ---------- */
+function equipe(){
+  const bs=cfg.barbeiros(), fs=cfg.folgas().filter(f=>f.data>=U.hoje()).sort((a,b)=>a.data.localeCompare(b.data));
+  let html=topo("Equipe",`<button class="btn prim" id="btnAddB">+ Cadastrar barbeiro</button>`);
+  html+=`<div class="cards">${bs.map((b,i)=>`<div class="card"><div style="display:flex;gap:10px;align-items:center;margin-bottom:12px"><div class="av">${esc(ini(b.nome))}</div>
+    <div style="flex:1"><b>${esc(b.nome)}</b><div class="muted" style="font-size:12.5px">${esc(b.especialidade||"")}</div></div>
+    <button class="btn mini ghost" data-up="${i}" ${i?"":"disabled"} title="Subir">↑</button><button class="btn mini ghost" data-down="${i}" ${i<bs.length-1?"":"disabled"} title="Descer">↓</button></div>
+    <label>Dias de trabalho (escala)</label><div class="chips" style="margin-bottom:12px">${[1,2,3,4,5,6,0].map(d=>`<button class="chip ${b.dias.includes(d)?"on":""}" data-dia="${i}:${d}">${U.DIAS_C[d]}</button>`).join("")}</div>
+    <div class="grid3"><div><label>Entra</label><input type="time" value="${b.inicio||""}" data-campo="${i}:inicio"></div><div><label>Sai</label><input type="time" value="${b.fim||""}" data-campo="${i}:fim"></div>
+    <div><label>Comissão %</label><input inputmode="numeric" value="${b.comissao||0}" data-campo="${i}:comissao"></div></div>
+    <p class="muted" style="font-size:12px;margin:8px 0 12px">Entrada e saída em branco seguem o horário da barbearia.</p>
+    <button class="btn mini bad" data-rem="${i}">Remover da equipe</button></div>`).join("")}</div>
+  <div class="card" style="margin-top:16px"><h3>Folgas e exceções por data</h3>
+   <div class="grid3" style="grid-template-columns:1fr 1fr 2fr auto;align-items:end;gap:10px"><div><label>Barbeiro</label><select id="fgB">${bs.map(b=>`<option value="${b.id}">${esc(b.nome)}</option>`).join("")}</select></div>
+   <div><label>Data</label><input type="date" id="fgD" value="${U.addDias(U.hoje(),1)}"></div><div><label>Motivo</label><input id="fgM" placeholder="Ex.: consulta médica"></div><button class="btn prim" id="fgOk">Adicionar folga</button></div>
+   <table class="t" style="margin-top:12px"><tbody>${fs.map(f=>`<tr><td>${U.dataLonga(f.data)}</td><td>${esc((BB.barbeiro(f.barbeiroId)||{}).nome||"")}</td><td class="muted">${esc(f.motivo||"")}</td><td class="num"><button class="btn mini ghost" data-delf="${f.id}">Remover</button></td></tr>`).join("")||`<tr><td class="livre">Nenhuma folga marcada.</td></tr>`}</tbody></table></div>`;
+  $("#main").innerHTML=html;
+  const salvar=l=>{S.set("barbeiros",l);equipe();};
+  const m=$("#main");
+  m.querySelectorAll("[data-dia]").forEach(b=>b.onclick=()=>{const [i,d]=b.dataset.dia.split(":").map(Number);const l=cfg.barbeiros();const s=new Set(l[i].dias);s.has(d)?s.delete(d):s.add(d);l[i].dias=[...s];salvar(l);});
+  m.querySelectorAll("[data-campo]").forEach(inp=>inp.onchange=()=>{const [i,c]=inp.dataset.campo.split(":");const l=cfg.barbeiros();l[+i][c]=c==="comissao"?(+inp.value||0):inp.value;S.set("barbeiros",l);toast("Salvo.");});
+  m.querySelectorAll("[data-up],[data-down]").forEach(b=>b.onclick=()=>{const i=+(b.dataset.up??b.dataset.down),j=b.dataset.up!=null?i-1:i+1;const l=cfg.barbeiros();[l[i],l[j]]=[l[j],l[i]];salvar(l);});
+  m.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{const l=cfg.barbeiros();if(l.length<2){toast("A equipe precisa de pelo menos 1 barbeiro.");return;}if(confirm("Remover "+l[+b.dataset.rem].nome+" da equipe?")){l.splice(+b.dataset.rem,1);salvar(l);}});
+  $("#fgOk").onclick=()=>{const f=cfg.folgas();f.push({id:U.uid(),barbeiroId:$("#fgB").value,data:$("#fgD").value,motivo:$("#fgM").value.trim()});S.set("folgas",f);toast("Folga adicionada. Os horários dele somem do link do cliente nesse dia.");equipe();};
+  m.querySelectorAll("[data-delf]").forEach(b=>b.onclick=()=>{S.set("folgas",cfg.folgas().filter(f=>f.id!==b.dataset.delf));equipe();});
+  $("#btnAddB").onclick=()=>modal(`<h2>Cadastrar barbeiro</h2><div class="campos"><div><label>Nome</label><input id="nbN"></div><div><label>Especialidade</label><input id="nbE" placeholder="Ex.: degradê, barba"></div>
+    <div><label>Comissão %</label><input id="nbC" value="50" inputmode="numeric"></div></div><div class="fim"><button class="btn ghost" data-fechar>Cancelar</button><button class="btn prim" id="nbOk">Cadastrar</button></div>`,()=>{
+    $("#nbOk").onclick=()=>{const n=$("#nbN").value.trim();if(!n)return;const l=cfg.barbeiros();l.push({id:U.uid(),nome:n,especialidade:$("#nbE").value.trim(),dias:[2,3,4,5,6],inicio:"",fim:"",comissao:+$("#nbC").value||0});fecharModal();salvar(l);toast(n+" entrou na equipe e já aparece no link do cliente.");};});
+}
+
+/* ---------- HORÁRIOS ---------- */
+function horarios(){
+  const ex=cfg.expediente(), es=cfg.especiais().sort((a,b)=>a.data.localeCompare(b.data));
+  let html=topo("Horários");
+  html+=`<div class="card scroll-x" style="margin-bottom:16px"><h3>Expediente semanal</h3><table class="t"><thead><tr><th>Dia</th><th>Aberto</th><th>Abre</th><th>Fecha</th><th>Pausa de</th><th>até</th></tr></thead><tbody>
+  ${[1,2,3,4,5,6,0].map(d=>{const e=ex[d];return `<tr><td><b>${U.DIAS[d]}</b></td><td><button class="chip ${e.aberto?"on":""}" data-ab="${d}">${e.aberto?"Aberto":"Fechado"}</button></td>
+   ${["abre","fecha","pausaIni","pausaFim"].map(c=>`<td><input type="time" value="${e[c]||""}" data-ex="${d}:${c}" ${e.aberto?"":"disabled"} style="min-width:110px"></td>`).join("")}</tr>`}).join("")}</tbody></table></div>
+  <div class="card"><h3>Datas especiais (feriados, horário diferente)</h3>
+   <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 2fr auto;gap:10px;align-items:end" class="esp-form"><div><label>Data</label><input type="date" id="eD" value="${U.addDias(U.hoje(),7)}"></div>
+   <div><label>Tipo</label><select id="eT"><option value="fechado">Fechado</option><option value="horario">Horário especial</option></select></div>
+   <div><label>Abre</label><input type="time" id="eA" value="09:00"></div><div><label>Fecha</label><input type="time" id="eF" value="14:00"></div>
+   <div><label>Nome</label><input id="eN" placeholder="Ex.: Natal"></div><button class="btn prim" id="eOk">Adicionar</button></div>
+   <table class="t" style="margin-top:12px"><tbody>${es.map(e=>`<tr><td>${U.dataLonga(e.data)}</td><td>${esc(e.nome||"")}</td><td>${e.tipo==="fechado"?'<span class="neg">Fechado</span>':e.abre+" às "+e.fecha}</td><td class="num"><button class="btn mini ghost" data-dele="${e.id}">Remover</button></td></tr>`).join("")||`<tr><td class="livre">Nenhuma data especial.</td></tr>`}</tbody></table></div>`;
+  $("#main").innerHTML=html;
+  const m=$("#main");
+  m.querySelectorAll("[data-ab]").forEach(b=>b.onclick=()=>{const l=cfg.expediente();l[+b.dataset.ab].aberto=!l[+b.dataset.ab].aberto;S.set("expediente",l);horarios();});
+  m.querySelectorAll("[data-ex]").forEach(i=>i.onchange=()=>{const [d,c]=i.dataset.ex.split(":");const l=cfg.expediente();l[+d][c]=i.value;S.set("expediente",l);toast("Horário salvo. O link do cliente já usa o novo horário.");});
+  $("#eOk").onclick=()=>{const l=cfg.especiais().filter(e=>e.data!==$("#eD").value);l.push({id:U.uid(),data:$("#eD").value,tipo:$("#eT").value,abre:$("#eA").value,fecha:$("#eF").value,nome:$("#eN").value.trim()});S.set("especiais",l);horarios();};
+  m.querySelectorAll("[data-dele]").forEach(b=>b.onclick=()=>{S.set("especiais",cfg.especiais().filter(e=>e.id!==b.dataset.dele));horarios();});
+}
+
+/* ---------- CONFIGURAÇÕES ---------- */
+function config(){
+  const temas=[["preto-dourado","Preto e dourado","#D4AF5F","#0B0A08"],["preto-prata","Preto e prata","#D4D7DE","#0C0C0D"],["bordo-cobre","Bordô e cobre","#D08A5C","#26131A"]];
+  const t=cfg.tema();
+  const tabela=(tipo,l)=>`<table class="t"><thead><tr><th>Nome</th>${tipo==="servicos"?"<th>Duração (min)</th>":""}<th>Preço (R$)</th><th></th></tr></thead><tbody>
+    ${l.map((s,i)=>`<tr><td><input value="${esc(s.nome)}" data-ed="${tipo}:${i}:nome"></td>${tipo==="servicos"?`<td><input value="${s.duracao}" inputmode="numeric" data-ed="${tipo}:${i}:duracao" style="max-width:90px"></td>`:""}
+    <td><input value="${s.preco}" inputmode="decimal" data-ed="${tipo}:${i}:preco" style="max-width:110px"></td><td class="num"><button class="btn mini ghost" data-rm="${tipo}:${i}">Remover</button></td></tr>`).join("")}</tbody></table>
+    <button class="btn mini" data-novo="${tipo}" style="margin-top:10px">+ Adicionar</button>`;
+  let html=topo("Configurações");
+  html+=`<div class="card" style="margin-bottom:16px"><h3>Tema visual</h3><p class="muted" style="font-size:13.5px;margin:-4px 0 12px">Vale para o painel e para o link do cliente.</p>
+   <div class="swatch">${temas.map(([k,n,a,b])=>`<button data-tema="${k}" class="${t===k?"on":""}"><i style="background:linear-gradient(135deg,${b} 50%,${a} 50%);border:1px solid ${a}"></i>${n}</button>`).join("")}</div></div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(420px,1fr))"><div class="card scroll-x"><h3>Serviços e preços</h3>${tabela("servicos",cfg.servicos())}</div>
+  <div class="card scroll-x"><h3>Produtos e bebidas</h3>${tabela("produtos",cfg.produtos())}</div></div>
+  <div class="cards" style="margin-top:16px"><div class="card"><h3>Segurança</h3><p class="muted" style="font-size:13.5px;margin:0 0 12px">${S.get("senha",null)?"Senha principal definida (guardada com PBKDF2-SHA-256 e salt).":"Nenhuma senha definida ainda."} Na versão final dá para criar senhas separadas para equipe, horários e outros acessos.</p>
+   <button class="btn" id="btnSenha">${S.get("senha",null)?"Trocar senha principal":"Criar senha principal"}</button> <button class="btn ghost" id="btnSair">Sair</button></div>
+  <div class="card"><h3>Zerar demonstração</h3><p class="muted" style="font-size:13.5px;margin:0 0 12px">Apaga atendimentos e movimentos e recria os exemplos. Mantém equipe, serviços, horários e tema.</p><button class="btn bad" id="btnZerar">Zerar atendimentos e caixa</button></div></div>`;
+  $("#main").innerHTML=html;
+  const m=$("#main");
+  m.querySelectorAll("[data-tema]").forEach(b=>b.onclick=()=>{S.set("tema",b.dataset.tema);BB.aplicarTema();config();});
+  m.querySelectorAll("[data-ed]").forEach(i=>i.onchange=()=>{const [tp,k,c]=i.dataset.ed.split(":");const l=cfg[tp]();l[+k][c]=c==="nome"?i.value:(parseFloat(i.value.replace(",","."))||0);S.set(tp,l);toast("Salvo.");});
+  m.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{const [tp,k]=b.dataset.rm.split(":");const l=cfg[tp]();if(l.length<2)return;l.splice(+k,1);S.set(tp,l);config();});
+  m.querySelectorAll("[data-novo]").forEach(b=>b.onclick=()=>{const tp=b.dataset.novo;const l=cfg[tp]();l.push(tp==="servicos"?{id:U.uid(),nome:"Novo serviço",duracao:30,preco:0,desc:""}:{id:U.uid(),nome:"Novo produto",preco:0});S.set(tp,l);config();});
+  $("#btnZerar").onclick=()=>{if(confirm("Zerar atendimentos e movimentos da demonstração?")){BB.zerarDemonstracao();toast("Demonstração zerada.");render();}};
+  $("#btnSair").onclick=()=>{try{sessionStorage.removeItem("bb_logado")}catch(e){} telaLogin();};
+  $("#btnSenha").onclick=()=>{S.del("senha");try{sessionStorage.removeItem("bb_logado")}catch(e){} telaLogin();};
+}
+
+/* ---------- util ---------- */
+function modal(html,depois){fecharModal();const d=document.createElement("div");d.className="modal-bg";d.id="modal";d.innerHTML=`<div class="modal">${html}</div>`;
+  d.onclick=e=>{if(e.target===d||e.target.closest("[data-fechar]"))fecharModal();};document.body.appendChild(d);depois&&depois();const f=d.querySelector("input");f&&f.focus();}
+function fecharModal(){const m=$("#modal");m&&m.remove();}
+function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}
+
+/* ---------- novos agendamentos do link aparecem sozinhos ---------- */
+let conhecidos=new Set(BB.agendamentos().map(a=>a.id));
+function checar(){
+  const l=BB.agendamentos(); const novos=l.filter(a=>!conhecidos.has(a.id)&&a.origem==="app");
+  l.forEach(a=>conhecidos.add(a.id));
+  if(novos.length&&!$("#telaApp").hidden){
+    novos.forEach(a=>{destaque.add(a.id);toast(`Novo agendamento: ${a.cliente}, ${U.dataCurta(a.data)} às ${a.hora} (${a.servicoNome})`);});
+    if(view==="agenda"&&!$("#modal")){if(novos.length===1&&modoAgenda==="dia")dia=novos[0].data;agenda();}
+    badges(); setTimeout(()=>novos.forEach(a=>destaque.delete(a.id)),8000);
+  }
+  const r=$("#relogio"); if(r)r.textContent=U.hhmm(U.agoraMin());
+}
+setInterval(checar,3000);
+window.addEventListener("storage",e=>{if(e.key===S.key("tema"))BB.aplicarTema();checar();});
+
+let logado=false;try{logado=sessionStorage.getItem("bb_logado")==="1"}catch(e){}
+const pv=new URLSearchParams(location.search).get("v"); if(pv&&["agenda","caixa","financeiro","vendas","equipe","horarios","config"].includes(pv))view=pv;
+if(logado||new URLSearchParams(location.search).has("demo"))entrar(); else telaLogin();
+})();
+</script>
+</body>
+</html>
